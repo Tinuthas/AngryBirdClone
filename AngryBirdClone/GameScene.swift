@@ -13,6 +13,12 @@ class GameScene: SKScene {
     
     //var bird2 = SKSpriteNode()
     var bird = SKSpriteNode()
+    var box1 = SKSpriteNode()
+    var box2 = SKSpriteNode()
+    var box3 = SKSpriteNode()
+    var box4 = SKSpriteNode()
+    var box5 = SKSpriteNode()
+    var box6 = SKSpriteNode()
     
     override func didMove(to view: SKView) {
         
@@ -23,6 +29,11 @@ class GameScene: SKScene {
         bird2.zPosition = 1
         self.addChild(bird2)*/
         
+        // Physics Body
+        self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        self.scene?.scaleMode = .aspectFit
+        
+        // Bird
         bird = childNode(withName: "bird") as! SKSpriteNode
         
         let birdTexture = SKTexture(imageNamed: "bird")
@@ -31,7 +42,28 @@ class GameScene: SKScene {
         bird.physicsBody?.isDynamic = true
         bird.physicsBody?.mass = 0.5
         
-        self.physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        //Box
+        let boxTexture = SKTexture(imageNamed: "brick")
+        let size = CGSize(width: boxTexture.size().width / 6, height: boxTexture.size().height / 6)
+        
+        box1 = childNode(withName: "box1") as! SKSpriteNode
+        setBoxSettings(box: box1, size: size)
+        
+        box2 = childNode(withName: "box2") as! SKSpriteNode
+        setBoxSettings(box: box2, size: size)
+        
+        box3 = childNode(withName: "box3") as! SKSpriteNode
+        setBoxSettings(box: box3, size: size)
+        
+        box4 = childNode(withName: "box4") as! SKSpriteNode
+        setBoxSettings(box: box4, size: size)
+        
+        box5 = childNode(withName: "box5") as! SKSpriteNode
+        setBoxSettings(box: box5, size: size)
+        
+        box6 = childNode(withName: "box6") as! SKSpriteNode
+        setBoxSettings(box: box6, size: size)
+        
     }
     
     
@@ -66,5 +98,13 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+    }
+    
+    func setBoxSettings(box: SKSpriteNode, size: CGSize){
+        box.physicsBody = SKPhysicsBody(rectangleOf: size)
+        box.physicsBody?.isDynamic = true
+        box.physicsBody?.affectedByGravity = true
+        box.physicsBody?.allowsRotation = true
+        box.physicsBody?.mass = 0.4
     }
 }
