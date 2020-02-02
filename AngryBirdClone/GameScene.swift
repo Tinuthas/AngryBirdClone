@@ -20,6 +20,8 @@ class GameScene: SKScene {
     var box5 = SKSpriteNode()
     var box6 = SKSpriteNode()
     
+    var gameStarted = false
+    
     override func didMove(to view: SKView) {
         
         /*let texture = SKTexture(imageNamed: "bird")
@@ -38,7 +40,7 @@ class GameScene: SKScene {
         
         let birdTexture = SKTexture(imageNamed: "bird")
         bird.physicsBody = SKPhysicsBody(circleOfRadius: birdTexture.size().height/13)
-        bird.physicsBody?.affectedByGravity = true
+        bird.physicsBody?.affectedByGravity = false
         bird.physicsBody?.isDynamic = true
         bird.physicsBody?.mass = 0.15
         
@@ -80,13 +82,44 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        /*
         bird.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 100))
-        
+        bird.physicsBody?.affectedByGravity = true*/
+        if gameStarted == false {
+            if let touch = touches.first {
+                let touchLocation = touch.location(in: self)
+                let touchNodes = nodes(at: touchLocation)
+                
+                if touchNodes.isEmpty == false {
+                    for node in touchNodes {
+                        if let sprite = node as? SKSpriteNode {
+                            if sprite == bird {
+                                bird.position = touchLocation
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        if gameStarted == false {
+            if let touch = touches.first {
+                let touchLocation = touch.location(in: self)
+                let touchNodes = nodes(at: touchLocation)
+                
+                if touchNodes.isEmpty == false {
+                    for node in touchNodes {
+                        if let sprite = node as? SKSpriteNode {
+                            if sprite == bird {
+                                bird.position = touchLocation
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
